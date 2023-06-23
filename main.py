@@ -29,3 +29,31 @@ def calcular_distancia(coord1, coord2):
     x2, y2 = coord2
     distancia = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
     return distancia
+
+# Inicialização do Pygame
+pygame.init()
+
+# Definição das dimensões da tela
+largura = 800
+altura = 600
+tela = pygame.display.set_mode((largura, altura))
+# Carregando a imagem de fundo
+fundo = pygame.image.load("bg.jpg")
+
+
+# Carregamento do ícone
+icone = pygame.image.load("space.png")
+pygame.display.set_icon(icone)
+
+# Título da janela
+pygame.display.set_caption("SPACE MARKER")
+
+# Carregamento do som de fundo
+pygame.mixer.music.load("som_de_fundo.mp3")
+pygame.mixer.music.play(-1)  # -1 para loop infinito
+
+# Carregamento das marcações
+marcacoes = carregar_marcacoes()
+
+# Variável para armazenar a primeira marcação
+primeira_marcacao = None
