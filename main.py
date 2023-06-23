@@ -89,3 +89,30 @@ while rodando:
                     marcacoes["linha"] = {"coordenadas": (primeira_marcacao[0], segunda_marcacao[0]),
                                           "distancia": distancia}
                     primeira_marcacao = None
+                    # Desenhar as marcações na tela
+    tela.fill((0, 0, 0))  # Preenchendo a tela com preto
+    # Desenhar a imagem de fundo
+    tela.blit(fundo, (0, 0))
+
+    for estrela, posicao in marcacoes.items():
+        if estrela != "linha":
+            pygame.draw.circle(tela, (255, 255, 255), posicao, 5)  # Desenhar círculo branco
+            texto = estrela
+            fonte = pygame.font.Font(None, 20)
+            texto_renderizado = fonte.render(texto, True, (255, 255, 255))
+            tela.blit(texto_renderizado, (posicao[0] + 10, posicao[1] - 10))
+
+    # Desenhar a linha entre as marcações
+    if "linha" in marcacoes:
+        coordenadas = marcacoes["linha"]["coordenadas"]
+        distancia = marcacoes["linha"]["distancia"]
+        pygame.draw.line(tela, (255, 255, 255), coordenadas[0], coordenadas[1])
+        texto = "Distância: {:.2f}".format(distancia)
+        fonte = pygame.font.Font(None, 20)
+        texto_renderizado = fonte.render(texto, True, (255, 255, 255))
+        tela.blit(texto_renderizado, (10, 10))
+
+    pygame.display.update()
+
+# Encerrando o Pygame
+pygame.quit()
