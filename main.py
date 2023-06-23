@@ -57,3 +57,35 @@ marcacoes = carregar_marcacoes()
 
 # Variável para armazenar a primeira marcação
 primeira_marcacao = None
+
+# Loop principal do jogo
+rodando = True
+while rodando:
+    # Tratamento de eventos
+    for event in pygame.event.get():
+        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+            # Salvando as marcações antes de fechar
+            salvar_marcacoes(marcacoes)
+            rodando = False
+        elif event.type == MOUSEBUTTONDOWN:
+            if event.button == 1:  # Botão esquerdo do mouse
+                # Abrindo caixa de diálogo para obter o nome da estrela
+                root = Tk()
+                root.withdraw()
+                nome_estrela = simpledialog.askstring("Nome da Estrela", "Digite o nome da estrela:")
+                root.destroy()
+
+                # Obtendo a posição do clique do mouse
+                posicao = pygame.mouse.get_pos()
+
+                # Salvando a primeira marcação ou criando a linha entre as marcações
+                if primeira_marcacao is None:
+                    primeira_marcacao = (posicao, nome_estrela)
+                else:
+                    segunda_marcacao = (posicao, nome_estrela)
+                    marcacoes[primeira_marcacao[1]] = primeira_marcacao[0]
+                    marcacoes[segunda_marcacao[1]] = segunda_marcacao[0]
+                    distancia = calcular_distancia(primeira_marcacao[0], segunda_marcacao[0])
+                    marcacoes["linha"] = {"coordenadas": (primeira_marcacao[0], segunda_marcacao[0]),
+                                          "distancia": distancia}
+                    primeira_marcacao = None
