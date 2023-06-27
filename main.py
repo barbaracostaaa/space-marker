@@ -27,7 +27,7 @@ def excluir_marcacoes():
 def calcular_distancia(coord1, coord2):
     x1, y1 = coord1
     x2, y2 = coord2
-    distancia = ((x2 - x1) * 2 + (y2 - y1) * 2) ** 0.5
+    distancia = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
     return distancia
 
 # Inicialização do Pygame
@@ -39,6 +39,7 @@ altura = 600
 tela = pygame.display.set_mode((largura, altura))
 # Carregando a imagem de fundo
 fundo = pygame.image.load("bg.jpg")
+
 
 # Carregamento do ícone
 icone = pygame.image.load("space.png")
@@ -88,18 +89,7 @@ while rodando:
                     marcacoes["linha"] = {"coordenadas": (primeira_marcacao[0], segunda_marcacao[0]),
                                           "distancia": distancia}
                     primeira_marcacao = None
-        elif event.type == KEYDOWN:
-            if event.key == K_F10:
-                # Salvar as marcações
-                salvar_marcacoes(marcacoes)
-            elif event.key == K_F11:
-                # Carregar as marcações salvas
-                marcacoes = carregar_marcacoes()
-            elif event.key == K_F12:
-                # Excluir todas as marcações
-                marcacoes = excluir_marcacoes()
-
-    # Desenhar as marcações na tela
+                    # Desenhar as marcações na tela
     tela.fill((0, 0, 0))  # Preenchendo a tela com preto
     # Desenhar a imagem de fundo
     tela.blit(fundo, (0, 0))
